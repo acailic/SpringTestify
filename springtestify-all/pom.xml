@@ -3,9 +3,10 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>SpringTestify</artifactId>
-        <groupId>io.github.acailic</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <groupId>io.github.springtestify</groupId>
+        <artifactId>springtestify-parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -20,29 +21,24 @@
     <dependencies>
         <!-- All SpringTestify modules -->
         <dependency>
-            <groupId>io.github.acailic</groupId>
+            <groupId>io.github.springtestify</groupId>
             <artifactId>springtestify-core</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.github.acailic</groupId>
+            <groupId>io.github.springtestify</groupId>
             <artifactId>springtestify-db</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.github.acailic</groupId>
+            <groupId>io.github.springtestify</groupId>
             <artifactId>springtestify-web</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.github.acailic</groupId>
+            <groupId>io.github.springtestify</groupId>
             <artifactId>springtestify-service</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.github.acailic</groupId>
+            <groupId>io.github.springtestify</groupId>
             <artifactId>springtestify-data</artifactId>
-            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

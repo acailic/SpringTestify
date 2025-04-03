@@ -175,26 +175,114 @@ class UserServiceTest extends AbstractServiceTest {
 
 ### 5. Data Module (`springtestify-data`)
 
-Generates realistic test data:
+Generates realistic test data using either property-based generation or Faker:
 
 ```java
 @SpringTestify
+// Property-based generation
 @GenerateTestData(entity = User.class, count = 10, properties = {"role=ADMIN:2,USER:8"})
+// Faker-based generation
+@FakerData(
+    entity = User.class,
+    count = 5,
+    fields = {
+        "name=name.fullName",
+        "email=internet.emailAddress",
+        "phoneNumber=phoneNumber.cellPhone",
+        "address=address.fullAddress"
+    }
+)
 class UserServiceIntegrationTest {
 
     @Autowired
     private TestDataRegistry testData;
 
     @Test
-    void shouldFindAdminUsers() {
+    void shouldFindUsers() {
         // Access the generated data
-        List<User> admins = testData.findAll(User.class,
-            user -> "ADMIN".equals(user.getRole()));
-
-        assertThat(admins).hasSize(2);
+        List<User> users = testData.findAll(User.class);
+        assertThat(users).hasSize(15); // 10 from GenerateTestData + 5 from FakerData
     }
 }
 ```
+
+### Faker Data Generation
+
+Use Java Faker to generate realistic test data with built-in providers:
+
+```java
+@FakerData(
+    entity = Customer.class,
+    count = 10,
+    locale = "en",
+    fields = {
+        "firstName=name.firstName",
+        "lastName=name.lastName",
+        "email=internet.emailAddress",
+        "phoneNumber=phoneNumber.cellPhone",
+        "address=address.streetAddress",
+        "city=address.city",
+        "country=address.country",
+        "company=company.name",
+        "jobTitle=job.title"
+    }
+)
+class CustomerServiceTest {
+    @Test
+    void shouldCreateCustomersWithRealisticData() {
+        List<Customer> customers = testData.findAll(Customer.class);
+        assertThat(customers)
+            .hasSize(10)
+            .allSatisfy(customer -> {
+                assertThat(customer.getEmail()).contains("@");
+                assertThat(customer.getPhoneNumber()).isNotBlank();
+            });
+    }
+}
+```
+
+Available Faker Providers:
+
+- `address` - Addresses, cities, countries
+- `ancient` - Ancient names, heroes, gods
+- `animal` - Animal names and types
+- `app` - App names and versions
+- `artist` - Artist names and genres
+- `aviation` - Aircraft, airports
+- `bank` - Account numbers, BIC, IBAN
+- `book` - Book titles, authors, genres
+- `business` - Company names, buzzwords
+- `cat` - Cat names and breeds
+- `chuckNorris` - Chuck Norris facts
+- `color` - Color names and hex codes
+- `commerce` - Product names, prices
+- `company` - Company names, industries
+- `crypto` - Cryptocurrency, wallets
+- `dateTime` - Dates and times
+- `dog` - Dog names and breeds
+- `food` - Dishes, ingredients
+- `gameOfThrones` - Characters, houses
+- `hacker` - Hacker phrases
+- `harryPotter` - Characters, locations
+- `hipster` - Hipster words
+- `internet` - Emails, domains, URLs
+- `job` - Job titles, fields
+- `lordOfTheRings` - Characters, locations
+- `lorem` - Lorem ipsum text
+- `music` - Genres, bands
+- `name` - Full names, first/last names
+- `number` - Random numbers
+- `phoneNumber` - Phone numbers
+- `pokemon` - Pokemon names
+- `rickAndMorty` - Characters, locations
+- `shakespeare` - Quotes, plays
+- `space` - Planets, galaxies
+- `stock` - Stock market terms
+- `superhero` - Hero names, powers
+- `team` - Team names, sports
+- `university` - University names
+- `weather` - Weather descriptions
+- `yoda` - Yoda quotes
 
 ## Advanced Features
 

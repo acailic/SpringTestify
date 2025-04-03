@@ -11,12 +11,20 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 /**
- * Base class for controller tests using SpringTestify.
+ * Base class for controller tests that provides common functionality and test
+ * utilities.
  * <p>
- * Provides convenient methods for executing requests and making assertions on responses.
+ * This class provides:
+ * <ul>
+ * <li>Access to {@link MockMvc} for performing HTTP requests</li>
+ * <li>Base path configuration for API requests</li>
+ * <li>Request builder utility for constructing test requests</li>
+ * </ul>
+ * <p>
  * Classes extending this class should be annotated with {@link ControllerTest}.
  * <p>
  * Example usage:
+ *
  * <pre>
  * &#064;ControllerTest(path = "/api/users")
  * public class UserControllerTest extends AbstractControllerTest {
@@ -24,26 +32,39 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
  *     &#064;Test
  *     void shouldReturnUsersList() throws Exception {
  *         performGet("/")
- *             .andExpect(status().isOk())
- *             .andExpect(jsonPath("$[0].name").exists());
+ *                 .andExpect(status().isOk())
+ *                 .andExpect(jsonPath("$[0].name").exists());
  *
  *         // Or using the fluent assertion API:
  *         assertThat(performGet("/"))
- *             .isSuccessful()
- *             .hasJsonPath("$[0].name");
+ *                 .isSuccessful()
+ *                 .hasJsonPath("$[0].name");
  *     }
  * }
  * </pre>
  */
 public abstract class AbstractControllerTest {
 
+    /**
+     * The MockMvc instance for performing HTTP requests in tests.
+     * This is automatically configured by the test context.
+     */
     @Autowired
     protected MockMvc mockMvc;
 
+    /**
+     * The base path for API requests.
+     * This is configured through the
+     * {@link io.github.springtestify.core.annotation.ControllerTest} annotation.
+     */
     @Autowired
     @Qualifier("springTestifyBasePath")
     protected String basePath;
 
+    /**
+     * The request builder utility for constructing test requests.
+     * This is automatically configured based on the base path.
+     */
     @Autowired
     protected ApiRequestBuilder requestBuilder;
 

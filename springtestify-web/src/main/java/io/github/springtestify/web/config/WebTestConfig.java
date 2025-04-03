@@ -1,44 +1,31 @@
 package io.github.springtestify.web.config;
 
-import io.github.springtestify.web.listener.ControllerTestExecutionListener;
 import io.github.springtestify.web.util.ApiRequestBuilder;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * Configuration for web testing support in SpringTestify.
+ * Configuration class for web test utilities.
  * <p>
- * This class registers the necessary beans for controller testing support.
+ * This configuration provides:
+ * <ul>
+ * <li>API request builder configuration</li>
+ * <li>Base path configuration for API requests</li>
+ * </ul>
  */
-@TestConfiguration
+@Configuration
 public class WebTestConfig {
 
     /**
-     * Creates a ControllerTestExecutionListener bean.
+     * Creates an {@link ApiRequestBuilder} instance configured with the base path.
      *
-     * @return the ControllerTestExecutionListener
+     * @param springTestifyBasePath the base path for API requests, injected from
+     *                              the test context
+     * @return configured {@link ApiRequestBuilder} instance
      */
     @Bean
-    @ConditionalOnMissingBean
-    public ControllerTestExecutionListener controllerTestExecutionListener() {
-        return new ControllerTestExecutionListener();
-    }
-    
-    /**
-     * Creates an ApiRequestBuilder bean using the base path from the test context.
-     * <p>
-     * This bean is lazy-initialized as it depends on the base path being set by the
-     * ControllerTestExecutionListener, which happens during test execution.
-     *
-     * @param basePath the base path for API requests, injected from the test context
-     * @return the ApiRequestBuilder
-     */
-    @Bean
-    @Lazy
-    @ConditionalOnMissingBean
-    public ApiRequestBuilder apiRequestBuilder(String springTestifyBasePath) {
+    public ApiRequestBuilder apiRequestBuilder(@Qualifier("springTestifyBasePath") String springTestifyBasePath) {
         return new ApiRequestBuilder(springTestifyBasePath);
     }
 }

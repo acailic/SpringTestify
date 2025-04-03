@@ -54,6 +54,7 @@
         <h2.version>2.2.220</h2.version>
         <hsqldb.version>2.7.2</hsqldb.version>
         <derby.version>10.16.1.1</derby.version>
+        <javafaker.version>1.0.2</javafaker.version>
     </properties>
 
     <modules>
@@ -125,7 +126,6 @@
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter</artifactId>
                 <version>${junit-jupiter.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>com.github.seregamorph</groupId>
@@ -137,12 +137,17 @@
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
                 <version>${mockito.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
                 <version>${assertj.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.github.javafaker</groupId>
+                <artifactId>javafaker</artifactId>
+                <version>${javafaker.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
