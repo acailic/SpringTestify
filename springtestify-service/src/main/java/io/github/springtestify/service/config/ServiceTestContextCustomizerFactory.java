@@ -21,17 +21,17 @@ public class ServiceTestContextCustomizerFactory implements ContextCustomizerFac
                                                     List<ContextConfigurationAttributes> configAttributes) {
         // Check if the test class is annotated with @ServiceTest
         ServiceTest annotation = AnnotatedElementUtils.findMergedAnnotation(testClass, ServiceTest.class);
-        
+
         if (annotation != null) {
             // Extract settings from the annotation
-            Class<?> serviceClass = annotation.value();
-            boolean autoMock = annotation.autoMock();
-            Class<?>[] mockConfigClasses = annotation.mockConfigurations();
-            
+            Class<?> serviceClass = annotation.service();
+            boolean autoMock = annotation.mockDependencies();
+            Class<?>[] mockConfigClasses = annotation.classes();
+
             // Create and return a customizer with the settings
             return new ServiceTestContextCustomizer(serviceClass, autoMock, Arrays.asList(mockConfigClasses));
         }
-        
+
         return null;
     }
 }

@@ -13,7 +13,7 @@ import java.util.function.Function;
  * <p>
  * This class provides a more readable way to set up mock behavior
  * than the standard Mockito API.
- * 
+ *
  * @param <T> the type being mocked
  * @param <R> the return type of the method being stubbed
  */
@@ -66,15 +66,16 @@ public class MockStubber<T, R> {
         if (returnValues.isEmpty()) {
             throw new IllegalArgumentException("Return values list cannot be empty");
         }
-        
+
         R firstValue = returnValues.get(0);
         if (returnValues.size() > 1) {
-            Object[] remainingValues = returnValues.subList(1, returnValues.size()).toArray();
+            @SuppressWarnings("unchecked")
+            R[] remainingValues = (R[]) returnValues.subList(1, returnValues.size()).toArray();
             stubbing.thenReturn(firstValue, remainingValues);
         } else {
             stubbing.thenReturn(firstValue);
         }
-        
+
         return mock;
     }
 

@@ -64,6 +64,7 @@
         <module>springtestify-service</module>
         <module>springtestify-data</module>
         <module>springtestify-all</module>
+        <module>springtestify-utils</module>
     </modules>
 
     <dependencyManagement>
@@ -148,7 +149,6 @@
                 <groupId>com.github.javafaker</groupId>
                 <artifactId>javafaker</artifactId>
                 <version>${javafaker.version}</version>
-                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
