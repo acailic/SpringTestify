@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.github.springtestify</groupId>
+    <artifactId>springtestify-parent</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>SpringTestify</name>
+    <description>Simplifying Spring Testing with In-Memory Databases</description>
+    <url>https://github.com/acailic/SpringTestify</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Aleksandar Ilic</name>
+            <organizationUrl>https://github.com/acailic</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/acailic/SpringTestify.git</connection>
+        <developerConnection>scm:git:ssh://github.com:acailic/SpringTestify.git</developerConnection>
+        <url>https://github.com/acailic/SpringTestify</url>
+    </scm>
+
+    <properties>
+        <!-- Default Java version - can be overridden in profiles -->
+        <java.version>8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- Dependency Versions -->
+        <spring-boot.version>2.7.14</spring-boot.version>
+        <junit-jupiter.version>5.9.3</junit-jupiter.version>
+        <mockito.version>4.11.0</mockito.version>
+        <assertj.version>3.24.2</assertj.version>
+        <h2.version>2.2.220</h2.version>
+        <hsqldb.version>2.7.2</hsqldb.version>
+        <derby.version>10.16.1.1</derby.version>
+    </properties>
+
+    <modules>
+        <module>springtestify-core</module>
+        <module>springtestify-db</module>
+        <module>springtestify-web</module>
+        <module>springtestify-service</module>
+        <module>springtestify-data</module>
+        <module>springtestify-all</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Spring Boot Dependencies -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Internal Module Dependencies -->
+            <dependency>
+                <groupId>io.github.springtestify</groupId>
+                <artifactId>springtestify-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.springtestify</groupId>
+                <artifactId>springtestify-db</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.springtestify</groupId>
+                <artifactId>springtestify-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.springtestify</groupId>
+                <artifactId>springtestify-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.springtestify</groupId>
+                <artifactId>springtestify-data</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- In-Memory Database Dependencies -->
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${h2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hsqldb</groupId>
+                <artifactId>hsqldb</artifactId>
+                <version>${hsqldb.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.derby</groupId>
+                <artifactId>derby</artifactId>
+                <version>${derby.version}</version>
+            </dependency>
+
+            <!-- Test Dependencies -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${junit-jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.github.seregamorph</groupId>
+                <artifactId>spring-test-smart-context</artifactId>
+                <version>0.9</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${assertj.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.11.0</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.1.2</version>
+                    <configuration>
+                        <properties>
+                            <configurationParameters>
+                                junit.jupiter.testclass.order.default=org.junit.jupiter.api.ClassOrderer$OrderAnnotation
+                            </configurationParameters>
+                        </properties>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.3.0</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.5.0</version>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+        <!-- Profile for Spring Boot 2.4+ with Java 8+ -->
+        <profile>
+            <id>spring-boot-2</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <java.version>8</java.version>
+                <spring-boot.version>2.7.14</spring-boot.version>
+            </properties>
+        </profile>
+
+        <!-- Profile for Spring Boot 3.x with Java 17+ -->
+        <profile>
+            <id>spring-boot-3</id>
+            <properties>
+                <java.version>17</java.version>
+                <spring-boot.version>3.1.4</spring-boot.version>
+            </properties>
+        </profile>
+    </profiles>
+</project>

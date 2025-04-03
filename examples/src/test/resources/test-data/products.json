@@ -1,0 +1,79 @@
+[
+  {
+    "name": "Smart TV 55\"",
+    "description": "55-inch LED Smart TV with 4K resolution",
+    "price": 599.99,
+    "category": "ELECTRONICS",
+    "tags": ["tv", "smart", "4k"],
+    "in_stock": true,
+    "stock_count": 25,
+    "created_at": "2025-01-15T10:30:00",
+    "updated_at": "2025-01-15T10:30:00"
+  },
+  {
+    "name": "Smartphone Pro Max",
+    "description": "Latest smartphone with advanced camera system",
+    "price": 999.99,
+    "category": "ELECTRONICS",
+    "tags": ["phone", "mobile", "camera"],
+    "in_stock": true,
+    "stock_count": 50,
+    "created_at": "2025-02-01T09:15:00",
+    "updated_at": "2025-02-01T09:15:00"
+  },
+  {
+    "name": "Wireless Noise-Cancelling Headphones",
+    "description": "Premium wireless headphones with active noise cancellation",
+    "price": 249.99,
+    "category": "ELECTRONICS",
+    "tags": ["audio", "wireless", "bluetooth"],
+    "in_stock": true,
+    "stock_count": 35,
+    "created_at": "2025-01-20T14:45:00",
+    "updated_at": "2025-01-20T14:45:00"
+  },
+  {
+    "name": "Programming Java: Complete Guide",
+    "description": "Comprehensive guide to Java programming",
+    "price": 49.99,
+    "category": "BOOKS",
+    "tags": ["java", "programming", "education"],
+    "in_stock": true,
+    "stock_count": 20,
+    "created_at": "2025-02-10T11:20:00",
+    "updated_at": "2025-02-10T11:20:00"
+  },
+  {
+    "name": "Cloud Computing Fundamentals",
+    "description": "Introduction to cloud computing concepts and practices",
+    "price": 39.99,
+    "category": "BOOKS",
+    "tags": ["cloud", "computing", "education"],
+    "in_stock": true,
+    "stock_count": 15,
+    "created_at": "2025-01-25T13:10:00",
+    "updated_at": "2025-01-25T13:10:00"
+  },
+  {
+    "name": "Winter Jacket",
+    "description": "Warm winter jacket with water-resistant outer layer",
+    "price": 129.99,
+    "category": "CLOTHING",
+    "tags": ["winter", "outdoor", "jacket"],
+    "in_stock": true,
+    "stock_count": 30,
+    "created_at": "2025-01-05T10:00:00",
+    "updated_at": "2025-01-05T10:00:00"
+  },
+  {
+    "name": "Running Shoes",
+    "description": "Lightweight running shoes with responsive cushioning",
+    "price": 89.99,
+    "category": "CLOTHING",
+    "tags": ["shoes", "running", "sports"],
+    "in_stock": false,
+    "stock_count": 0,
+    "created_at": "2025-02-05T16:30:00",
+    "updated_at": "2025-02-05T16:30:00"
+  }
+]

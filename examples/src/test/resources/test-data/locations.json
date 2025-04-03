@@ -1,0 +1,112 @@
+[
+  {
+    "name": "Central Park",
+    "description": "Famous urban park in Manhattan",
+    "type": "PARK",
+    "position": {
+      "type": "Point",
+      "coordinates": [-73.9654, 40.7829]
+    },
+    "address": "New York, NY 10022",
+    "created_at": "2025-01-01T10:00:00"
+  },
+  {
+    "name": "Empire State Building",
+    "description": "102-story Art Deco skyscraper",
+    "type": "LANDMARK",
+    "position": {
+      "type": "Point",
+      "coordinates": [-73.9857, 40.7484]
+    },
+    "address": "20 W 34th St, New York, NY 10001",
+    "created_at": "2025-01-02T11:30:00"
+  },
+  {
+    "name": "Metropolitan Museum of Art",
+    "description": "One of the world's largest and most visited art museums",
+    "type": "MUSEUM",
+    "position": {
+      "type": "Point",
+      "coordinates": [-73.9632, 40.7794]
+    },
+    "address": "1000 5th Ave, New York, NY 10028",
+    "created_at": "2025-01-03T09:45:00"
+  },
+  {
+    "name": "Times Square",
+    "description": "Major commercial intersection and tourist destination",
+    "type": "LANDMARK",
+    "position": {
+      "type": "Point",
+      "coordinates": [-73.9855, 40.7580]
+    },
+    "address": "Manhattan, NY 10036",
+    "created_at": "2025-01-04T14:20:00"
+  },
+  {
+    "name": "Brooklyn Bridge",
+    "description": "Hybrid cable-stayed/suspension bridge connecting Manhattan and Brooklyn",
+    "type": "LANDMARK",
+    "position": {
+      "type": "Point",
+      "coordinates": [-73.9969, 40.7061]
+    },
+    "address": "Brooklyn Bridge, New York, NY 10038",
+    "created_at": "2025-01-05T16:15:00"
+  },
+  {
+    "name": "Bryant Park",
+    "description": "Public park located between 5th and 6th Avenues",
+    "type": "PARK",
+    "position": {
+      "type": "Point",
+      "coordinates": [-73.9832, 40.7536]
+    },
+    "address": "New York, NY 10018",
+    "created_at": "2025-01-06T13:10:00"
+  },
+  {
+    "name": "American Museum of Natural History",
+    "description": "One of the largest natural history museums in the world",
+    "type": "MUSEUM",
+    "position": {
+      "type": "Point",
+      "coordinates": [-73.9741, 40.7813]
+    },
+    "address": "200 Central Park West, New York, NY 10024",
+    "created_at": "2025-01-07T10:30:00"
+  },
+  {
+    "name": "Grand Central Terminal",
+    "description": "Historic transportation hub and architectural landmark",
+    "type": "TRANSPORT",
+    "position": {
+      "type": "Point",
+      "coordinates": [-73.9772, 40.7527]
+    },
+    "address": "89 E 42nd St, New York, NY 10017",
+    "created_at": "2025-01-08T08:45:00"
+  },
+  {
+    "name": "Washington Square Park",
+    "description": "Public park in Greenwich Village, Manhattan",
+    "type": "PARK",
+    "position": {
+      "type": "Point",
+      "coordinates": [-73.9971, 40.7308]
+    },
+    "address": "New York, NY 10012",
+    "created_at": "2025-01-09T12:20:00"
+  },
+  {
+    "name": "Penn Station",
+    "description": "Major intercity train station and transportation facility",
+    "type": "TRANSPORT",
+    "position": {
+      "type": "Point",
+      "coordinates": [-73.9916, 40.7506]
+    },
+    "address": "New York, NY 10001",
+    "created_at": "2025-01-10T07:30:00"
+  }
+]
