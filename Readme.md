@@ -14,6 +14,7 @@ SpringTestify is a powerful testing library that simplifies Spring Boot testing 
 - 🔧 **Service layer testing** - Automatic mocking for dependencies
 - 📊 **Test data generation** - Generate data with real-world characteristics
 - 🏗️ **Modular design** - Use only what you need
+- ⚡ **Smart context caching** - Powered by [spring-test-smart-context](https://github.com/seregamorph/spring-test-smart-context) for optimized test execution
 
 ## Installation
 
@@ -63,7 +64,7 @@ class UserServiceIntegrationTest {
     void shouldCreateUser() {
         User user = new User("john.doe@example.com", "John Doe");
         User createdUser = userService.createUser(user);
-        
+
         assertThat(createdUser.getId()).isNotNull();
     }
 }
@@ -113,10 +114,10 @@ Easily test MongoDB applications with embedded MongoDB:
 class ProductRepositoryTest {
     @Autowired
     private MongoTemplate mongoTemplate;
-    
+
     @Autowired
     private ProductRepository productRepository;
-    
+
     @Test
     void shouldStoreAndRetrieveProduct() {
         // Test with embedded MongoDB
@@ -131,7 +132,7 @@ Makes testing REST controllers easy:
 ```java
 @ControllerTest(path = "/api/users")
 class UserControllerTest extends AbstractControllerTest {
-    
+
     @Test
     void shouldGetUsersList() throws Exception {
         assertThat(performGet("/"))
@@ -148,23 +149,23 @@ Provides tools for testing service layer with automatic mock creation:
 ```java
 @ServiceTest(UserService.class)
 class UserServiceTest extends AbstractServiceTest {
-    
+
     @Autowired
     private UserService userService;
-    
+
     @Autowired
     private UserRepository userRepository; // Automatically mocked
-    
+
     @Test
     void shouldFindUserById() {
         // Given
         String userId = "1";
         User user = new User(userId, "test@example.com");
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
-        
+
         // When
         User foundUser = userService.getUserById(userId);
-        
+
         // Then
         assertThat(foundUser).isEqualTo(user);
         verifyMock(UserRepository.class).findById(userId);
@@ -180,16 +181,16 @@ Generates realistic test data:
 @SpringTestify
 @GenerateTestData(entity = User.class, count = 10, properties = {"role=ADMIN:2,USER:8"})
 class UserServiceIntegrationTest {
-    
+
     @Autowired
     private TestDataRegistry testData;
-    
+
     @Test
     void shouldFindAdminUsers() {
         // Access the generated data
-        List<User> admins = testData.findAll(User.class, 
+        List<User> admins = testData.findAll(User.class,
             user -> "ADMIN".equals(user.getRole()));
-        
+
         assertThat(admins).hasSize(2);
     }
 }
@@ -252,10 +253,10 @@ For MongoDB applications, SpringTestify provides specialized support:
 class MongoDBIntegrationTest {
     @Autowired
     private MongoTemplate mongoTemplate;
-    
+
     @Autowired
     private ProductRepository productRepository;
-    
+
     @Test
     void shouldQueryProductsByCategory() {
         // Test MongoDB query methods with pre-generated data
