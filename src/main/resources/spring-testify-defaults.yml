@@ -1,0 +1,33 @@
+spring:
+  testify:
+    enable-auto-configuration: true
+    enable-smart-context-caching: true
+    default-locale: en
+    test:
+      enable-auto-mock-mvc: true
+      enable-auto-object-mapper: true
+      enable-method-ordering: true
+      method-orderer: org.junit.jupiter.api.MethodOrderer$OrderAnnotation
+    mock:
+      reset-before-each-test: true
+      strict-mode: true
+    data:
+      generator:
+        default-batch-size: 10
+        max-batch-size: 100
+        default-locale: en
+        enable-faker-cache: true
+      database:
+        cleanup-after-test: true
+        truncate-before-test: true
+        excluded-tables: []
+    profiles:
+      active: test
+      include:
+        - test-data
+        - test-security
+    security:
+      mock-user-enabled: true
+      default-roles:
+        - USER
+      mock-oauth2: false
