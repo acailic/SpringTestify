@@ -1,7 +1,7 @@
 package io.github.springtestify.test;
 
-import org.springframework.util.ReflectionUtils;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -41,7 +41,7 @@ public class TestEntityBuilder<T> {
                 String fieldName = entry.getKey();
                 Object value = entry.getValue().get();
 
-                Field field = ReflectionUtils.findField(entityClass, fieldName);
+                Field field = findField(entityClass, fieldName);
                 if (field != null) {
                     field.setAccessible(true);
                     field.set(entity, value);
@@ -51,6 +51,24 @@ public class TestEntityBuilder<T> {
         } catch (Exception e) {
             throw new RuntimeException("Failed to build entity: " + e.getMessage(), e);
         }
+    }
+
+    /**
+     * Find a field in the class hierarchy
+     * @param clazz The class to search
+     * @param fieldName The name of the field
+     * @return The field if found, null otherwise
+     */
+    private Field findField(Class<?> clazz, String fieldName) {
+        Class<?> searchType = clazz;
+        while (searchType != null) {
+            try {
+                return searchType.getDeclaredField(fieldName);
+            } catch (NoSuchFieldException e) {
+                searchType = searchType.getSuperclass();
+            }
+        }
+        return null;
     }
 
     /**
@@ -71,5 +89,34 @@ public class TestEntityBuilder<T> {
     public TestEntityBuilder<T> withFields(Map<String, Supplier<?>> fields) {
         fieldGenerators.putAll(fields);
         return this;
+    }
+
+    /**
+     * Set the ID field of an entity
+     * @param id The ID value
+     * @return this builder instance
+     */
+    public TestEntityBuilder<T> withId(Object id) {
+        return withField("id", () -> id);
+    }
+
+    /**
+     * Get all declared fields including inherited ones
+     * @return Array of all fields
+     */
+    public Field[] getAllFields() {
+        return getAllFields(new HashMap<>(), entityClass).values().toArray(new Field[0]);
+    }
+
+    private Map<String, Field> getAllFields(Map<String, Field> fields, Class<?> type) {
+        if (type != null) {
+            // Add declared fields from current class
+            Arrays.stream(type.getDeclaredFields())
+                  .forEach(field -> fields.putIfAbsent(field.getName(), field));
+
+            // Recursively get fields from superclass
+            getAllFields(fields, type.getSuperclass());
+        }
+        return fields;
     }
 }

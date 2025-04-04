@@ -31,9 +31,9 @@ class UserControllerTest extends AbstractCrudControllerTest<User, Long, UserServ
 
     @Override
     protected User createTestEntity() {
-        User user = builder.copy().build();
-        user.setId(1L);
-        return user;
+        return builder.copy()
+            .withId(1L)
+            .build();
     }
 
     @Override
@@ -54,19 +54,17 @@ class UserControllerTest extends AbstractCrudControllerTest<User, Long, UserServ
 
     @Test
     void shouldReturnUserWithAdminRole() throws Exception {
-        User adminUser = builder.copy()
+        assertFields(builder.copy()
+            .withId(1L)
             .withField("role", () -> "ADMIN")
-            .build();
-        adminUser.setId(1L);
-        assertFields(adminUser);
+            .build());
     }
 
     @Test
     void shouldReturnInactiveUser() throws Exception {
-        User inactiveUser = builder.copy()
+        assertFields(builder.copy()
+            .withId(1L)
             .withField("active", () -> false)
-            .build();
-        inactiveUser.setId(1L);
-        assertFields(inactiveUser);
+            .build());
     }
 }
