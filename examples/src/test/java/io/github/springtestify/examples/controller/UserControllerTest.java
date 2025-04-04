@@ -15,6 +15,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ScenarioTest(User.class)
 class UserControllerTest extends AbstractCrudControllerTest<User, Long, UserService> {
 
+    // Default no-arg constructor
+    public UserControllerTest() {
+        super(User.class);
+    }
+
+    // Constructor that takes Class<User> parameter to match the generated test class
+    public UserControllerTest(Class<User> entityClass) {
+        super(entityClass);
+    }
+
     @Override
     protected Long getTestEntityId() {
         return 1L;

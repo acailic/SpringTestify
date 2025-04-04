@@ -1,6 +1,6 @@
 package io.github.springtestify.test;
 
-import io.github.springtestify.annotation.CrudControllerTest;
+import io.github.springtestify.core.annotation.CrudControllerTest;
 import io.github.springtestify.generator.EntityGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -57,10 +57,27 @@ public class ScenarioTestProcessor extends AbstractProcessor {
             .addModifiers(Modifier.PUBLIC)
             .superclass(TypeName.get(typeElement.asType()));
 
+        // Get the entity class type mirror safely
+        TypeMirror entityType = null;
+        try {
+            annotation.value(); // This will throw MirroredTypeException
+        } catch (javax.lang.model.type.MirroredTypeException mte) {
+            entityType = mte.getTypeMirror();
+        }
+
+        if (entityType == null) {
+            processingEnv.getMessager().printMessage(
+                Diagnostic.Kind.ERROR,
+                "Could not determine entity type from @ScenarioTest annotation",
+                typeElement
+            );
+            return;
+        }
+
         // Add constructor
         MethodSpec constructor = MethodSpec.constructorBuilder()
             .addModifiers(Modifier.PUBLIC)
-            .addStatement("super($T.class)", annotation.value())
+            .addStatement("super($T.class)", TypeName.get(entityType))
             .build();
 
         classBuilder.addMethod(constructor);

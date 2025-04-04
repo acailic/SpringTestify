@@ -29,5 +29,10 @@ public enum DbType {
     /**
      * Apache Derby database.
      */
-    DERBY;
+    DERBY,
+
+    /**
+     * MongoDB database.
+     */
+    MONGODB;
 }

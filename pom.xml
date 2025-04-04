@@ -65,6 +65,7 @@
         <module>springtestify-data</module>
         <module>springtestify-all</module>
         <module>springtestify-utils</module>
+        <module>examples</module>
     </modules>
 
     <dependencyManagement>

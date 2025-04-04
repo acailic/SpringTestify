@@ -1,6 +1,6 @@
 package io.github.springtestify.config;
 
-import io.github.springtestify.annotation.CrudControllerTest;
+import io.github.springtestify.core.annotation.CrudControllerTest;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.test.context.TestContext;

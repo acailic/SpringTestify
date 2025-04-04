@@ -25,6 +25,11 @@
     </properties>
 
     <dependencies>
+     <dependency>
+            <groupId>io.github.springtestify</groupId>
+            <artifactId>springtestify-core</artifactId>
+            <version>0.1.0-SNAPSHOT</version>
+        </dependency>
         <!-- Spring Framework -->
         <dependency>
             <groupId>org.springframework</groupId>

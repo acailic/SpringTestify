@@ -1,20 +1,21 @@
 package io.github.springtestify.core.annotation;
 
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.*;
 
 /**
- * Annotation for testing Spring service classes.
+ * Annotation for testing CRUD controllers.
  * <p>
- * This annotation is a meta-annotation that configures a test for a service class
+ * This annotation is a meta-annotation that configures a test for a CRUD controller
  * with automatic mocking of dependencies.
  * <p>
  * Example usage:
  * <pre>
- * &#064;ServiceTest
- * public class UserServiceTest {
+ * &#064;CrudControllerTest
+ * public class UserControllerTest extends AbstractCrudControllerTest&lt;User&gt; {
  *     // Test methods
  * }
  * </pre>
@@ -24,7 +25,8 @@ import java.lang.annotation.*;
 @Documented
 @Inherited
 @SpringBootTest
-public @interface ServiceTest {
+@AutoConfigureMockMvc
+public @interface CrudControllerTest {
     /**
      * Alias for {@link SpringBootTest#classes}.
      * <p>
@@ -35,23 +37,23 @@ public @interface ServiceTest {
     Class<?>[] classes() default {};
 
     /**
-     * The service class under test.
+     * The entity class for the CRUD operations.
      * <p>
      * This can be used to automatically configure the test context.
-     * @return the service class under test
-     */
-    Class<?> service() default void.class;
-
-    /**
-     * Alias for {@link #service()}.
-     * <p>
-     * This is provided for convenience and compatibility with other annotations.
-     * @return the service class under test
+     * @return the entity class
      */
     Class<?> value() default void.class;
 
     /**
-     * Whether to automatically mock dependencies of the service.
+     * The base path for the CRUD operations.
+     * <p>
+     * This is used to construct the URLs for the CRUD operations.
+     * @return the base path
+     */
+    String basePath() default "";
+
+    /**
+     * Whether to automatically mock dependencies of the controller.
      * @return true if dependencies should be automatically mocked, false otherwise
      */
     boolean mockDependencies() default true;

@@ -2,43 +2,21 @@ package io.github.springtestify.examples.model;
 
 import io.github.springtestify.annotation.TestEntity;
 import io.github.springtestify.annotation.TestField;
-import io.github.springtestify.annotation.generator.Email;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
 import java.util.Objects;
 
 @Entity
-@TestEntity(
-    scenarios = {
-        @TestEntity.Scenario(
-            name = "admin",
-            values = {
-                @TestEntity.FieldValue(field = "role", value = "ADMIN"),
-                @TestEntity.FieldValue(field = "active", value = "true")
-            }
-        ),
-        @TestEntity.Scenario(
-            name = "inactive",
-            values = {
-                @TestEntity.FieldValue(field = "active", value = "false")
-            }
-        ),
-        @TestEntity.Scenario(
-            name = "moderator",
-            values = {
-                @TestEntity.FieldValue(field = "role", value = "MODERATOR"),
-                @TestEntity.FieldValue(field = "active", value = "true")
-            }
-        )
-    }
-)
 public class User {
     @Id
     @GeneratedValue
     private Long id;
 
-    @Email
+    //@Email
     private String email;
 
     @TestField(generator = "name")

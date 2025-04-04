@@ -42,4 +42,20 @@ public @interface DataSetup {
      * @return the format of the data files
      */
     String format() default "";
+
+    /**
+     * The data type of the files.
+     * <p>
+     * Used for specific data loaders like MongoDB.
+     * @return the data type
+     */
+    String dataType() default "";
+
+    /**
+     * The collection name for MongoDB data.
+     * <p>
+     * Only used with MongoDB database type.
+     * @return the collection name
+     */
+    String collection() default "";
 }
