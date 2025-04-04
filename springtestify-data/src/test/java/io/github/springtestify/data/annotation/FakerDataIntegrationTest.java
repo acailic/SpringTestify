@@ -2,8 +2,9 @@ package io.github.springtestify.data.annotation;
 
 import io.github.springtestify.core.annotation.FakerData;
 import io.github.springtestify.core.annotation.SpringTestify;
-import io.github.springtestify.data.registry.TestDataRegistry;
-import lombok.Data;
+import io.github.springtestify.data.listener.TestDataGenerationListener.GeneratedDataRegistry;
+import io.github.springtestify.data.model.TestCompany;
+import io.github.springtestify.data.model.TestUser;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,12 +39,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 class FakerDataIntegrationTest {
 
     @Autowired
-    private TestDataRegistry testDataRegistry;
+    private GeneratedDataRegistry testDataRegistry;
 
     @Test
     void shouldGenerateUsersWithFaker() {
         // when
-        List<TestUser> users = testDataRegistry.findAll(TestUser.class);
+        List<TestUser> users = (List<TestUser>) testDataRegistry.getData().get(TestUser.class);
 
         // then
         assertThat(users)
@@ -59,7 +60,7 @@ class FakerDataIntegrationTest {
     @Test
     void shouldGenerateCompaniesWithFaker() {
         // when
-        List<TestCompany> companies = testDataRegistry.findAll(TestCompany.class);
+        List<TestCompany> companies = (List<TestCompany>) testDataRegistry.getData().get(TestCompany.class);
 
         // then
         assertThat(companies)
@@ -70,22 +71,5 @@ class FakerDataIntegrationTest {
                 assertThat(company.getCatchPhrase()).isNotBlank();
                 assertThat(company.getAddress()).isNotBlank();
             });
-    }
-
-    // Test entities
-    @Data
-    public static class TestUser {
-        private String username;
-        private String email;
-        private String fullName;
-        private String phoneNumber;
-    }
-
-    @Data
-    public static class TestCompany {
-        private String name;
-        private String industry;
-        private String catchPhrase;
-        private String address;
     }
 }
