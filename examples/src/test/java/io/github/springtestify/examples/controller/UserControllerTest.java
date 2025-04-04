@@ -1,40 +1,19 @@
 package io.github.springtestify.examples.controller;
 
-import io.github.springtestify.annotation.CrudControllerTest;
+import io.github.springtestify.annotation.*;
 import io.github.springtestify.examples.model.User;
 import io.github.springtestify.examples.service.UserService;
-import io.github.springtestify.generator.EntityGenerator;
 import io.github.springtestify.test.AbstractCrudControllerTest;
-import io.github.springtestify.test.TestEntityBuilder;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.ResultMatcher;
-
-import java.util.Map;
-import java.util.function.Supplier;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @CrudControllerTest(path = "/api/users")
+@ScenarioTest(User.class)
 class UserControllerTest extends AbstractCrudControllerTest<User, Long, UserService> {
-
-    private final TestEntityBuilder<User> builder;
-
-    public UserControllerTest() {
-        this.builder = new TestEntityBuilder<>(User.class)
-            .withFields(Map.of(
-                "email", EntityGenerator.CommonGenerators::email,
-                "name", EntityGenerator.CommonGenerators::name,
-                "role", () -> "USER",
-                "active", () -> true
-            ));
-    }
-
-    @Override
-    protected User createTestEntity() {
-        return builder.copy()
-            .withId(1L)
-            .build();
-    }
 
     @Override
     protected Long getTestEntityId() {
@@ -53,18 +32,100 @@ class UserControllerTest extends AbstractCrudControllerTest<User, Long, UserServ
     }
 
     @Test
-    void shouldReturnUserWithAdminRole() throws Exception {
-        assertFields(builder.copy()
-            .withId(1L)
-            .withField("role", () -> "ADMIN")
-            .build());
-    }
+    @TestScenario(
+        value = "admin",
+        description = "Should return a user with admin role",
+        expect = {
+            @Expect(
+                status = HttpStatus.CREATED,
+                jsonPath = {"$.role", "$.active"},
+                value = {"ADMIN", "true"}
+            )
+        }
+    )
+    @ScenarioAction(method = HttpMethod.POST)
+    void shouldReturnUserWithAdminRole() {}
 
     @Test
-    void shouldReturnInactiveUser() throws Exception {
-        assertFields(builder.copy()
-            .withId(1L)
-            .withField("active", () -> false)
-            .build());
-    }
+    @TestScenario(
+        value = "inactive",
+        description = "Should return an inactive user",
+        expect = {
+            @Expect(
+                status = HttpStatus.CREATED,
+                jsonPath = "$.active",
+                value = "false"
+            )
+        }
+    )
+    @ScenarioAction(method = HttpMethod.POST)
+    void shouldReturnInactiveUser() {}
+
+    @Test
+    @TestScenario(
+        value = "moderator",
+        description = "Should return a user with moderator role",
+        expect = {
+            @Expect(
+                status = HttpStatus.CREATED,
+                jsonPath = {"$.role", "$.active"},
+                value = {"MODERATOR", "true"}
+            )
+        }
+    )
+    @ScenarioAction(method = HttpMethod.POST)
+    void shouldReturnModeratorUser() {}
+
+    @Test
+    @TestScenario(
+        value = "admin",
+        description = "Should return an inactive admin user",
+        expect = {
+            @Expect(
+                status = HttpStatus.CREATED,
+                jsonPath = {"$.role", "$.active"},
+                value = {"ADMIN", "false"}
+            )
+        },
+        overrides = {
+            @TestEntity.FieldValue(field = "active", value = "false")
+        }
+    )
+    @ScenarioAction(method = HttpMethod.POST)
+    void shouldReturnInactiveAdminUser() {}
+
+    @Test
+    @TestScenario(
+        value = "admin",
+        description = "Should validate required fields",
+        expect = {
+            @Expect(
+                status = HttpStatus.BAD_REQUEST,
+                error = "Email is required",
+                notNull = {"email", "name"},
+                exists = {"message", "timestamp"}
+            )
+        }
+    )
+    @ScenarioAction(method = HttpMethod.POST)
+    void shouldValidateRequiredFields() {}
+
+    @Test
+    @TestScenario(
+        value = "admin",
+        description = "Should get user by ID",
+        expect = {
+            @Expect(
+                status = HttpStatus.OK,
+                jsonPath = {"$.id", "$.role"},
+                value = {"1", "ADMIN"}
+            )
+        }
+    )
+    @ScenarioAction(
+        method = HttpMethod.GET,
+        path = "/{id}",
+        params = @ScenarioAction.RequestParam(name = "id", value = "1")
+    )
+    void shouldGetUserById() {}
 }
