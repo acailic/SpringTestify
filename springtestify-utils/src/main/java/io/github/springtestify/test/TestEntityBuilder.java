@@ -3,7 +3,7 @@ package io.github.springtestify.test;
 import io.github.springtestify.annotation.TestEntity;
 import io.github.springtestify.annotation.TestField;
 import io.github.springtestify.annotation.TestScenario;
-import io.github.springtestify.generator.EntityGenerator;
+import io.github.springtestify.test.generator.EntityGenerator;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
+import java.util.Objects;
 
 /**
  * Generic builder for creating test entities with dynamic field values.
@@ -45,20 +46,19 @@ public class TestEntityBuilder<T> {
     /**
      * Create an entity using a predefined scenario
      * @param scenarioName Name of the scenario to use
-     * @return Built entity with scenario values
+     * @return this builder instance
      */
-    public T buildScenario(String scenarioName) {
+    public TestEntityBuilder<T> withScenario(String scenarioName) {
         TestEntity.Scenario scenario = scenarios.get(scenarioName);
         if (scenario == null) {
             throw new IllegalArgumentException("Unknown scenario: " + scenarioName);
         }
 
-        TestEntityBuilder<T> builder = this.copy();
         for (TestEntity.FieldValue fieldValue : scenario.values()) {
-            builder.withField(fieldValue.field(), () -> convertValue(fieldValue.value(),
+            withField(fieldValue.field(), () -> convertValue(fieldValue.value(),
                 findField(entityClass, fieldValue.field()).getType()));
         }
-        return builder.build();
+        return this;
     }
 
     /**

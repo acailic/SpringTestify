@@ -16,10 +16,12 @@
     <properties>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <spring.version>5.3.31</spring.version>
+        <spring.version>5.3.27</spring.version>
+        <spring-data.version>2.7.12</spring-data.version>
         <junit-jupiter.version>5.9.3</junit-jupiter.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <faker.version>1.0.2</faker.version>
+        <hamcrest.version>2.2</hamcrest.version>
     </properties>
 
     <dependencies>
@@ -51,6 +53,13 @@
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-launcher</artifactId>
             <version>1.9.3</version>
+        </dependency>
+
+        <!-- Hamcrest -->
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>${hamcrest.version}</version>
         </dependency>
 
         <!-- Jackson for JSON processing -->
@@ -91,7 +100,7 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-commons</artifactId>
-            <version>${spring.version}</version>
+            <version>${spring-data.version}</version>
         </dependency>
     </dependencies>
 

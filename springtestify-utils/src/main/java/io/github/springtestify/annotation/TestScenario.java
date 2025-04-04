@@ -23,6 +23,11 @@ public @interface TestScenario {
     String description() default "";
 
     /**
+     * Expected result of the test
+     */
+    String expected() default "";
+
+    /**
      * Test expectations
      */
     Expect[] expect() default {};
